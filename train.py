@@ -53,9 +53,12 @@ def main(cfg):
     train_iters=500000
     for itr in range(train_iters):
         x_batch_train, y_batch_train = mnist.train.next_batch(batch_size)
+        x_batch_train_adv = attack.perturb(x_batch_train.reshape(batch_size, img_size, img_size, 1), y_batch_train, sess)
+        adv_dict_train = {input_images: x_batch_train_adv.reshape(batch_size, img_size, img_size, 1),
+                          input_label: y_batch_train}
         nat_dict_train = {input_images: x_batch_train.reshape(batch_size, img_size, img_size, 1),
                           input_label: y_batch_train}
-        sess.run(train_op, feed_dict=nat_dict_train)
+        sess.run(train_op, feed_dict=adv_dict_train)
 
         if itr % 100 == 0:
             train_acc_i, train_loss_i = sess.run([model.accuracy, model.xent], feed_dict=nat_dict_train)
@@ -66,9 +69,9 @@ def main(cfg):
             print("iter: {}, train_acc:{}  test_acc:{} train_loss:{}  test_loss:{} "
                   .format(itr, train_acc_i, test_acc_i, train_loss_i, test_loss_i))
 
-            x_batch_train_adv = attack.perturb(x_batch_train.reshape(batch_size, img_size, img_size, 1), y_batch_test, sess)
+            x_batch_train_adv = attack.perturb(x_batch_train.reshape(batch_size, img_size, img_size, 1), y_batch_train, sess)
             adv_dict_train = {input_images: x_batch_train_adv.reshape(batch_size, img_size, img_size, 1),
-                              input_label: y_batch_test}
+                              input_label: y_batch_train}
             train_adv_acc_i, train_adv_loss_i = sess.run([model.accuracy, model.xent], feed_dict=adv_dict_train)
             x_batch_test_adv = attack.perturb(x_batch_test.reshape(batch_size, img_size, img_size, 1), y_batch_test, sess)
             adv_dict_test = {input_images: x_batch_test_adv.reshape(batch_size, img_size, img_size, 1),

@@ -15,7 +15,7 @@ class Model_att():
     def __init__(self, x, y, glimpse_size, num_att):
         self.x_input = x
         self.y_input = y
-        if 1:
+        if 0:
             with tf.variable_scope('att_ctr_pred') as scope:
                 with slim.arg_scope([slim.conv2d], kernel_size=3):
                     x = slim.conv2d(self.x_input, num_outputs=16, scope='conv1')
