@@ -1,4 +1,4 @@
-import model
+import model_cifar10
 import tensorflow as tf
 
 def average_gradients(tower_grads):

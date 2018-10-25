@@ -17,6 +17,8 @@ class Model_att():
         self.y_input = y
         self.num_glimpse = cfg['num_glimpse']
         self.glimpse_size = cfg['glimpse_size']
+        self.nGPU = cfg['nGPU']
+        sub_batch_size = self.sub_batch_size = cfg['batch_size'] // cfg['nGPU']
         learning_rate = cfg['lr']
         opt = tf.train.AdamOptimizer(learning_rate, beta1=0.5)
 
@@ -25,12 +27,13 @@ class Model_att():
         self.adv_grad = []
         self. xent = []
         tower_grads=[]
+        self.x_crop = []
         with tf.variable_scope(tf.get_variable_scope()) as scope:
-            for i in xrange(2):
+            for i in xrange(self.nGPU):
                 with tf.device('/gpu:%d' % i):
                     with tf.name_scope('%s_%d' % ('TOWER', i)) as scope:
-                        x_input_i = self.x_input[i*4:(i+1)*4]
-                        y_input_i = self.y_input[i*4:(i+1)*4]
+                        x_input_i = self.x_input[i*sub_batch_size:(i+1)*sub_batch_size]
+                        y_input_i = self.y_input[i*sub_batch_size:(i+1)*sub_batch_size]
                         if 0:
                             with tf.variable_scope('att_ctr_pred') as scope:
                                 with slim.arg_scope([slim.conv2d], kernel_size=3):
@@ -46,21 +49,32 @@ class Model_att():
                         loc = tf.split(x, self.num_glimpse, axis=1)
 
                         presoftmax_voting_i = []
-                        crop_i = []
                         with tf.variable_scope('classifier') as scope:
+                            x_crop_minibatch = []
                             for i, loc_i in enumerate(loc):
                                 # crop
-                                x_crop  = []
+                                x_crop_minibatch_loci  = []
                                 for j in range(3):
                                     x_in = x_input_i[:, :, :, j]
                                     x_out = take_a_2d_glimpse(x_in, loc_i, self.glimpse_size, delta=1, sigma=0.4)
-                                    x_crop  += [tf.expand_dims(x_out, -1)]
-                                x_crop = tf.concat(x_crop, -1)
-                                crop_i += [tf.expand_dims(x_crop, 0)]
-                                x = slim.conv2d(x_crop, kernel_size=5, num_outputs=32, scope='conv1')
+                                    x_crop_minibatch_loci += [tf.expand_dims(x_out, -1)]
+                                x_crop_minibatch_loci = tf.concat(x_crop_minibatch_loci, -1)
+                                x_crop_minibatch += [tf.expand_dims(x_crop_minibatch_loci, 0)]
+
+                                h1 = x = slim.conv2d(x_crop_minibatch_loci, kernel_size=5, num_outputs=16, scope='conv1')
+                                x = slim.conv2d(x, kernel_size=5, num_outputs=16, scope='conv11')
+                                x += h1
+                                h2 = x = slim.conv2d(x, kernel_size=5, num_outputs=160, scope='conv2')
+                                x = slim.conv2d(x, kernel_size=5, num_outputs=160, scope='conv21')
+                                x += h2
                                 x = slim.max_pool2d(x, kernel_size=2)
-                                x = slim.conv2d(x, kernel_size=5, num_outputs=64, scope='conv2')
+                                h3 = x = slim.conv2d(x, kernel_size=5, num_outputs=320, scope='conv3')
+                                x = slim.conv2d(x, kernel_size=5, num_outputs=320, scope='conv31')
+                                x += h3
                                 x = slim.max_pool2d(x, kernel_size=2)
+                                h4 = x = slim.conv2d(x, kernel_size=5, num_outputs=640, scope='conv4')
+                                x = slim.conv2d(x, kernel_size=5, num_outputs=640, scope='conv41')
+                                x += h4
                                 x = slim.flatten(x, scope='flatten')
                                 x = slim.fully_connected(x, num_outputs=1024, scope='fc1')
                                 x = slim.fully_connected(x, num_outputs=10, activation_fn=None, scope='fc2')
@@ -74,14 +88,14 @@ class Model_att():
                 y_xent = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_input_i, logits=presoftmax_voting)
                 xent = tf.reduce_sum(y_xent)
                 # adversarial grads across GPU
-                adv_grad_i = tf.gradients(xent, x_input_i)[0]
-                self.adv_grad += [adv_grad_i]
+                adv_grad_minibatch = tf.gradients(xent, x_input_i)[0]
+                self.adv_grad += [adv_grad_minibatch]
                 # training grads across GPU.
                 grad_i = opt.compute_gradients(xent)
                 tower_grads.append(grad_i)
 
                 self.presoftmax_voting += [presoftmax_voting]
-                self.x_crop += [tf.concat(crop_i,0)]
+                self.x_crop += [tf.concat(x_crop_minibatch,0)]
                 self.xent += [xent]
 
         self.adv_grad = tf.concat(self.adv_grad, 0)

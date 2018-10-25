@@ -51,5 +51,5 @@ def load(cv=0, one_hot=True):
             trainX = tot_trainX[i]
             trainY = tot_trainY[i]
             concate = True
-    if cv == -1: return trainX, trainY, testX, testY
-    return trainX, trainY, validX, validY, testX, testY
+    if cv == -1: return trainX/255., trainY, testX/255., testY
+    return trainX/255., trainY, validX/255., validY, testX/255., testY

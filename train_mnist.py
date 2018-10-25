@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-from model import Model_att as Model
+from model_mnist import Model_att as Model
 from pgd_attack import *
 from viz2 import *
 import os
@@ -30,7 +30,7 @@ def main(cfg):
     optimizer=tf.train.AdamOptimizer(learning_rate, beta1=0.5)
     grads=optimizer.compute_gradients(model.xent)
     train_op=optimizer.apply_gradients(grads)
-
+    saver = tf.train.Saver()
     ## training starts ###
     FLAGS = tf.app.flags.FLAGS
     tfconfig = tf.ConfigProto(
@@ -87,13 +87,15 @@ def main(cfg):
             hist['test_loss'] += [test_loss_i]
             hist['train_adv_loss'] += [train_adv_loss_i]
             hist['test_adv_loss'] += [test_adv_loss_i]
+            np.save('hist',hist)
+            saver.save(sess,'ckpt')
     print('done')
 
 
 if __name__ == "__main__":
 
 
-    cfg = {'batch_size': 128,
+    cfg = {'batch_size': 32,
            'img_dim': 2,
            'img_size': 28,
            'num_glimpse': 5,

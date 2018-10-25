@@ -1,11 +1,10 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-from model import Model_att as Model
+from model_cifar10 import Model_att as Model
 from pgd_multiGPU import *
 from viz2 import *
 import os
 import numpy as np
-from pgd_attack import LinfPGDAttack
 from utils import creat_dir
 from tqdm import tqdm
 from cifar10_loader import load
@@ -20,9 +19,7 @@ def main(cfg):
     # build classifier
     model = Model(input_images, input_label, cfg)
 
-    # setup attacker
-    attack = LinfPGDAttack(model, epsilon=0.3, k=40, a=0.01, random_start=True, loss_func='xent')
-
+    saver = tf.train.Saver()
     ## training starts ###
     FLAGS = tf.app.flags.FLAGS
     tfconfig = tf.ConfigProto(
@@ -50,7 +47,7 @@ def main(cfg):
         x_batch_train, y_batch_train = trainX[ii*batch_size:(ii+1)*batch_size], trainY[ii*batch_size:(ii+1)*batch_size]
         nat_dict_train = {input_images: x_batch_train.reshape(batch_size, img_size, img_size, 3),
                           input_label: y_batch_train}
-        x_batch_train_adv = get_PGD(sess, model.adv_grad, nat_dict_train, input_images)
+        x_batch_train_adv = get_PGD(sess, model.adv_grad, nat_dict_train, input_images, epsilon=8./255, a=2./255, k=8)
         adv_dict_train = {input_images: x_batch_train_adv.reshape(batch_size, img_size, img_size, 3),
                           input_label: y_batch_train}
         sess.run(model.train_op, feed_dict=adv_dict_train)
@@ -65,11 +62,11 @@ def main(cfg):
             print("iter: {}, train_acc:{}  test_acc:{} train_loss:{}  test_loss:{} "
                   .format(itr, train_acc_i, test_acc_i, train_loss_i, test_loss_i))
 
-            x_batch_train_adv = get_PGD(sess, model.adv_grad, nat_dict_train, input_images)
+            x_batch_train_adv = get_PGD(sess, model.adv_grad, nat_dict_train, input_images, epsilon=8./255, a=2./255, k=20)
             adv_dict_train = {input_images: x_batch_train_adv.reshape(batch_size, img_size, img_size, 3),
                               input_label: y_batch_train}
             train_adv_acc_i, train_adv_loss_i = sess.run([model.accuracy, model.xent], feed_dict=adv_dict_train)
-            x_batch_test_adv = get_PGD(sess, model.adv_grad, nat_dict_test, input_images)
+            x_batch_test_adv = get_PGD(sess, model.adv_grad, nat_dict_test, input_images, epsilon=8./255, a=2./255, k=20)
             adv_dict_test = {input_images: x_batch_test_adv.reshape(batch_size, img_size, img_size, 3),
                               input_label: y_batch_test}
             test_adv_acc_i, test_adv_loss_i = sess.run([model.accuracy, model.xent], feed_dict=adv_dict_test)
@@ -83,17 +80,20 @@ def main(cfg):
             hist['test_loss'] += [test_loss_i]
             hist['train_adv_loss'] += [train_adv_loss_i]
             hist['test_adv_loss'] += [test_adv_loss_i]
+            np.save('hist',hist)
+            saver.save(sess, 'ckpt')
     print('done')
 
 
 if __name__ == "__main__":
 
 
-    cfg = {'batch_size': 8,
+    cfg = {'batch_size': 4,
            'img_dim': 2,
            'img_size': 32,
-           'num_glimpse': 3,
+           'num_glimpse': 5,
            'glimpse_size': 20,
-           'lr': 1e-4
+           'lr': 1e-4,
+           'nGPU': 2
            }
     main(cfg)
