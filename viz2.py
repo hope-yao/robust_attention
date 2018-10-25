@@ -82,8 +82,9 @@ def mnist_viz(arr,cx_i,cy_i,y,filename):
     fig.savefig(filename)  # save the figure to file
     plt.close(fig)  # close the figure
 
-
-# x_crop_val = sess.run(model.x_crop, feed_dict=nat_dict_train)
+# import matplotlib.pyplot as plt
+# feed_dict = adv_dict_train
+# x_crop_val = sess.run(model.x_crop, feed_dict=feed_dict)
 # for img_i in range(10):
 #     # glimpses
 #     for glimpse_i in range(5):
@@ -92,7 +93,7 @@ def mnist_viz(arr,cx_i,cy_i,y,filename):
 #         plt.axis('off')
 #     # actual
 #     plt.subplot(7, 10, 10*(1+glimpse_i) + img_i + 1)
-#     plt.imshow(nat_dict_train[input_images][img_i,:,:,0], cmap='gray')
+#     plt.imshow(feed_dict[input_images][img_i,:,:,0], cmap='gray')
 #     plt.axis('off')
 #     # all glimpses
 #     plt.subplot(7, 10, 10*(2+glimpse_i) + img_i + 1)
