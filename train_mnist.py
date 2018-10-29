@@ -98,7 +98,7 @@ def main(cfg):
             hist['train_adv_loss'] += [train_adv_loss_i]
             hist['test_adv_loss'] += [test_adv_loss_i]
             np.save('hist',hist)
-            saver.save(sess,'noatt_ckpt')
+            saver.save(sess,'crop_ckpt')
     print('done')
 
 

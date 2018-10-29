@@ -1,3 +1,6 @@
 ./MNIST_data
 ./CIFAR10_data
 ./cifar-10-batches-py
+./adversary_data
+./model_ckpt
+./result

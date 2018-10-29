@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8127e53-c54e-4f3c-a0a8-aca949041ccf" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/train_mnist_nat.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/blackbox_mnist_gen.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/blackbox_mnist_test.py" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/case1_1.npy" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/case1_2.npy" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/case1_3.npy" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/case1_4.npy" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/case1_4.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/case1_5.npy" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/case1_5.png" afterPath="" />
       <change beforePath="$PROJECT_DIR$/model_mnist.py" afterPath="$PROJECT_DIR$/model_mnist.py" />
       <change beforePath="$PROJECT_DIR$/train_mnist.py" afterPath="$PROJECT_DIR$/train_mnist.py" />
     </list>
@@ -29,11 +38,21 @@
       <file leaf-file-name="train_mnist.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_mnist.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+            <state relative-caret-position="39">
+              <caret line="78" column="62" lean-forward="true" selection-start-line="78" selection-start-column="62" selection-end-line="78" selection-end-column="62" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -60,20 +79,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model_mnist.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="model_mnist.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model_mnist.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="157" column="57" lean-forward="false" selection-start-line="157" selection-start-column="57" selection-end-line="157" selection-end-column="57" />
+            <state relative-caret-position="344">
+              <caret line="149" column="40" lean-forward="false" selection-start-line="149" selection-start-column="40" selection-end-line="149" selection-end-column="40" />
               <folding />
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="case1_5.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/case1_5.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
           </provider>
         </entry>
       </file>
@@ -89,7 +101,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_mnist_nat.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_mnist_nat.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_mnist_nat.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="378">
@@ -141,6 +153,7 @@
       <find>Model</find>
       <find>model</find>
       <find>adv</find>
+      <find>ckpt</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,7 +167,6 @@
         <option value="$PROJECT_DIR$/pgd_attack.py" />
         <option value="$PROJECT_DIR$/madry_model.py" />
         <option value="$PROJECT_DIR$/viz2.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/multiGPU_utils.py" />
         <option value="$PROJECT_DIR$/pgd_multiGPU.py" />
         <option value="$PROJECT_DIR$/model.py" />
@@ -164,9 +176,10 @@
         <option value="$PROJECT_DIR$/train_cifar10.py" />
         <option value="$PROJECT_DIR$/cifar10_loader.py" />
         <option value="$PROJECT_DIR$/train_mnist_nat.py" />
+        <option value="$PROJECT_DIR$/blackbox_mnist_test.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/train_mnist.py" />
         <option value="$PROJECT_DIR$/model_mnist.py" />
-        <option value="$PROJECT_DIR$/blackbox_mnist_test.py" />
       </list>
     </option>
   </component>
@@ -372,13 +385,21 @@
       <option name="project" value="LOCAL" />
       <updated>1540503697989</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="cropping on mnist seems promissing, gonna fine tun parameters">
+      <created>1540843584454</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1540843584454</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="1984" y="-4" width="1857" height="1085" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20273224" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20273224" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5185185" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -386,7 +407,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30153847" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32777777" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23384616" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32615384" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -404,7 +425,8 @@
     <MESSAGE value="attention with adversarial training" />
     <MESSAGE value="added multiGPU version for CIFAR10, needs further testing on exx" />
     <MESSAGE value="added CIFAR10 and multiGPU" />
-    <option name="LAST_COMMIT_MESSAGE" value="added CIFAR10 and multiGPU" />
+    <MESSAGE value="cropping on mnist seems promissing, gonna fine tun parameters" />
+    <option name="LAST_COMMIT_MESSAGE" value="cropping on mnist seems promissing, gonna fine tun parameters" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -431,6 +453,21 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>from scipy.signal import savgol_filter
+# import numpy as np
+# import matplotlib.pyplot as plt
+plt.figure()
+yhat = savgol_filter(hist['train_adv_acc'], 31, 3) # window size 51, polynomial order 3
+# yhat = hist['train_adv_acc']
+plt.plot(yhat)
+yhat = savgol_filter(hist['test_adv_acc'], 31, 3) # window size 51, polynomial order 3
+# yhat = hist['test_adv_acc']
+plt.plot(yhat)
+plt.grid('on')</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>from scipy.signal import savgol_filter
 # import numpy as np
@@ -537,18 +574,6 @@ yhat = savitzky_golay(hist['train_adv_acc'], 10, 3) # window size 51, polynomial
 # import numpy as np
 # import matplotlib.pyplot as plt
 yhat = savitzky_golay(hist['train_adv_acc'], 10, 3) # window size 51, polynomial order 3
-# plt.plot(yhat)
-# yhat = savitzky_golay(hist['test_adv_acc'], 51, 3) # window size 51, polynomial order 3
-# plt.plot(yhat)
-# plt.grid('on')</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>from scipy.signal import savgol_filter
-import numpy as np
-import matplotlib.pyplot as plt
-# yhat = savitzky_golay(hist['train_adv_acc'], 51, 3) # window size 51, polynomial order 3
 # plt.plot(yhat)
 # yhat = savitzky_golay(hist['test_adv_acc'], 51, 3) # window size 51, polynomial order 3
 # plt.plot(yhat)
@@ -784,13 +809,6 @@ import matplotlib.pyplot as plt
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda2/lib/python2.7/site-packages/tensorflow/python/framework/common_shapes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -915,14 +933,6 @@ import matplotlib.pyplot as plt
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model_mnist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="157" column="57" lean-forward="false" selection-start-line="157" selection-start-column="57" selection-end-line="157" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pgd_attack.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -941,6 +951,16 @@ import matplotlib.pyplot as plt
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/train_mnist_nat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="21" lean-forward="false" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/anaconda2/lib/python2.7/site-packages/tensorflow/python/client/session.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
@@ -949,23 +969,29 @@ import matplotlib.pyplot as plt
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_mnist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        <state relative-caret-position="39">
+          <caret line="78" column="62" lean-forward="true" selection-start-line="78" selection-start-column="62" selection-end-line="78" selection-end-column="62" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_mnist_nat.py">
+    <entry file="file://$PROJECT_DIR$/model_mnist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="21" lean-forward="false" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="344">
+          <caret line="149" column="40" lean-forward="false" selection-start-line="149" selection-start-column="40" selection-end-line="149" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
