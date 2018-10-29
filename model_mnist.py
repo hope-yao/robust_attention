@@ -60,14 +60,15 @@ class Model_att():
 
 
 class Model_madry(object):
-  def __init__(self, x):
-    self.x_image = x
+  def __init__(self, x, y ):
+    self.x_input = x
+    self.y_input = y
 
     # first convolutional layer
     W_conv1 = self._weight_variable([5,5,1,32])
     b_conv1 = self._bias_variable([32])
 
-    h_conv1 = tf.nn.relu(self._conv2d(self.x_image, W_conv1) + b_conv1)
+    h_conv1 = tf.nn.relu(self._conv2d(self.x_input, W_conv1) + b_conv1)
     h_pool1 = self._max_pool_2x2(h_conv1)
 
     # second convolutional layer
@@ -102,6 +103,9 @@ class Model_madry(object):
     self.num_correct = tf.reduce_sum(tf.cast(correct_prediction, tf.int64))
     self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
+
+
+
   @staticmethod
   def _weight_variable(shape):
       initial = tf.truncated_normal(shape, stddev=0.1)
@@ -122,3 +126,38 @@ class Model_madry(object):
                             ksize = [1,2,2,1],
                             strides=[1,2,2,1],
                             padding='SAME')
+
+import numpy as np
+class Model_crop():
+    def __init__(self, x, y):
+        self.x_input = x
+        self.y_input = y
+
+        self.x_voting = []
+        self.x_crop = []
+        loc = np.arange(10,18,1, dtype='int64')
+        loc = [(i, j) for i in loc for j in loc]
+        self.xent = []
+        with tf.variable_scope('classifier') as scope:
+            self.y_pred = []
+            for i, loc_i in enumerate(loc):
+                # crop
+                loc_x, loc_y = loc_i
+                x_crop_i = self.x_input[:, loc_x-10:loc_x+10, loc_y-10:loc_y+10, :]
+                self.x_crop += [x_crop_i]
+                x = slim.conv2d(x_crop_i, kernel_size=5, num_outputs=32, scope='conv1')
+                x = slim.max_pool2d(x, kernel_size=2)
+                x = slim.conv2d(x, kernel_size=5, num_outputs=64, scope='conv2')
+                x = slim.max_pool2d(x, kernel_size=2)
+                x = slim.flatten(x, scope='flatten')
+                x = slim.fully_connected(x, num_outputs=1024, scope='fc1')
+                pre_softmax = x = slim.fully_connected(x, num_outputs=10, activation_fn=None, scope='fc2')
+                self.y_pred += [tf.argmax(pre_softmax, 1)]
+                y_xent = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.y_input, logits=pre_softmax)
+                self.xent += [tf.reduce_sum(y_xent)]
+                tf.get_variable_scope().reuse_variables()
+                assert tf.get_variable_scope().reuse == True
+            self.y_pred = tf.stack(self.y_pred)
+            self.xent = tf.reduce_mean(self.xent)
+
+
