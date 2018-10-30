@@ -145,8 +145,8 @@ class Model_crop():
                 loc_x, loc_y = loc_i
                 x_crop_i = self.x_input[:, loc_x-10:loc_x+10, loc_y-10:loc_y+10, :]
                 self.x_crop += [x_crop_i]
-                x = slim.max_pool2d(x_crop_i, kernel_size=2)
-                x = slim.conv2d(x, kernel_size=5, num_outputs=32, scope='conv1')
+                # x = slim.max_pool2d(x, kernel_size=2)
+                x = slim.conv2d(x_crop_i, kernel_size=5, num_outputs=32, scope='conv1')
                 x = slim.max_pool2d(x, kernel_size=2)
                 x = slim.conv2d(x, kernel_size=5, num_outputs=64, scope='conv2')
                 x = slim.max_pool2d(x, kernel_size=2)

@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-from model_cifar10 import Model_att as Model
+from model_cifar10 import *
 from pgd_multiGPU import *
 from viz2 import *
 import os
@@ -17,7 +17,8 @@ def main(cfg):
     input_label = tf.placeholder(tf.int64,shape=(batch_size))
 
     # build classifier
-    model = Model(input_images, input_label, cfg)
+    # model = Model_att(input_images, input_label, cfg)
+    model = Model_Madry(input_images, input_label, cfg, mode='train')
 
     saver = tf.train.Saver()
     ## training starts ###
@@ -94,6 +95,6 @@ if __name__ == "__main__":
            'num_glimpse': 5,
            'glimpse_size': 20,
            'lr': 1e-4,
-           'nGPU': 2
+           'nGPU': 1
            }
     main(cfg)

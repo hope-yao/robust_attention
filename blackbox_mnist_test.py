@@ -59,7 +59,7 @@ def main(cfg):
         init = tf.global_variables_initializer()
         sess.run(init)
         saver.restore(sess,'noatt_ckpt')
-        mnist_adversary = np.load('mnist_adversary_noatt.npy').item()
+        mnist_adversary = np.load('./adversary_data/mnist_adversary_noatt.npy').item()
         adv_x, adv_y = mnist_adversary['x'], mnist_adversary['y']
         overall_acc = []
         for itr in tqdm(range(300)):
